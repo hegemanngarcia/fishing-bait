@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  fishing-bait-advisor:
+    build: .
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.fishing.rule=Host(`fishing.${DOMAIN_NAME}`)
+      - traefik.http.routers.fishing.tls=true
+      - traefik.http.routers.fishing.entrypoints=web,websecure
+      - traefik.http.routers.fishing.tls.certresolver=mytlschallenge
+      - traefik.http.middlewares.fishing.headers.SSLRedirect=true
+      - traefik.http.middlewares.fishing.headers.STSSeconds=315360000
+      - traefik.http.middlewares.fishing.headers.browserXSSFilter=true
+      - traefik.http.middlewares.fishing.headers.contentTypeNosniff=true
+      - traefik.http.middlewares.fishing.headers.forceSTSHeader=true
+      - traefik.http.middlewares.fishing.headers.SSLHost=fishing.${DOMAIN_NAME}
+      - traefik.http.middlewares.fishing.headers.STSIncludeSubdomains=true
+      - traefik.http.middlewares.fishing.headers.STSPreload=true
+      - traefik.http.routers.fishing.middlewares=fishing@docker
+      - traefik.http.services.fishing.loadbalancer.server.port=8080

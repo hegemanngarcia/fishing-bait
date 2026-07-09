@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fishing Bait Advisor – Köderempfehlungen für Angler" />
+  <title>Fishing Bait Advisor</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header id="app-header">
+    <h1>🎣 Fishing Bait Advisor</h1>
+    <div id="offline-banner" class="offline-banner hidden" role="alert" aria-live="polite">
+      ⚠️ Offline – keine gespeicherten Daten verfügbar
+    </div>
+  </header>
+
+  <main id="app-main">
+    <!-- Warnhinweise -->
+    <section id="warning-container" aria-live="polite" aria-label="Warnhinweise"></section>
+
+    <div id="app-layout">
+      <!-- Filterbereich -->
+      <aside id="filter-panel" aria-label="Filteroptionen">
+        <h2>Filter</h2>
+        <form id="filter-form" novalidate>
+
+          <div class="filter-group">
+            <label for="filter-wetter">Wetter</label>
+            <select id="filter-wetter" name="wetter">
+              <option value="">– Beliebig –</option>
+              <option value="sonnig">Sonnig</option>
+              <option value="leicht bewölkt">Leicht bewölkt</option>
+              <option value="bedeckt">Bedeckt</option>
+              <option value="Regen">Regen</option>
+              <option value="starker Regen">Starker Regen</option>
+              <option value="Wind">Wind</option>
+              <option value="Sturm">Sturm</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-tageszeit">Tageszeit</label>
+            <select id="filter-tageszeit" name="tageszeit">
+              <option value="">– Beliebig –</option>
+              <option value="Morgengrauen">Morgengrauen</option>
+              <option value="Morgen">Morgen</option>
+              <option value="Mittag">Mittag</option>
+              <option value="Nachmittag">Nachmittag</option>
+              <option value="Abend">Abend</option>
+              <option value="Nacht">Nacht</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-stroemung">Strömung</label>
+            <select id="filter-stroemung" name="stroemung">
+              <option value="">– Beliebig –</option>
+              <option value="keine">Keine</option>
+              <option value="schwach">Schwach</option>
+              <option value="mittel">Mittel</option>
+              <option value="stark">Stark</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-gewaesserart">Gewässerart</label>
+            <select id="filter-gewaesserart" name="gewaesserart">
+              <option value="">– Beliebig –</option>
+              <option value="Fluss">Fluss</option>
+              <option value="See">See</option>
+              <option value="Teich">Teich</option>
+              <option value="Stausee">Stausee</option>
+              <option value="Meer">Meer</option>
+              <option value="Brackwasser">Brackwasser</option>
+              <option value="Wehr">Wehr</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-tiefe">Tiefe</label>
+            <select id="filter-tiefe" name="tiefe">
+              <option value="">– Beliebig –</option>
+              <option value="Oberfläche">Oberfläche</option>
+              <option value="Mittelwasser">Mittelwasser</option>
+              <option value="Grund">Grund</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-jahreszeit">Jahreszeit</label>
+            <select id="filter-jahreszeit" name="jahreszeit">
+              <option value="">– Beliebig –</option>
+              <option value="Frühling">Frühling</option>
+              <option value="Sommer">Sommer</option>
+              <option value="Herbst">Herbst</option>
+              <option value="Winter">Winter</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-fischart">Fischart</label>
+            <select id="filter-fischart" name="fischart">
+              <option value="">– Beliebig –</option>
+              <option value="Forelle">Forelle</option>
+              <option value="Barsch">Barsch</option>
+              <option value="Hecht">Hecht</option>
+              <option value="Karpfen">Karpfen</option>
+              <option value="Zander">Zander</option>
+              <option value="Aal">Aal</option>
+              <option value="Brachse">Brachse</option>
+              <option value="Schleie">Schleie</option>
+              <option value="Wels">Wels</option>
+              <option value="Rotauge">Rotauge</option>
+            </select>
+          </div>
+
+          <!-- Wassertemperatur-Toggle -->
+          <div class="filter-group filter-group--temperature">
+            <div class="temperature-toggle">
+              <input type="checkbox" id="temp-toggle" name="temp-toggle" />
+              <label for="temp-toggle">Wassertemperatur aktivieren</label>
+            </div>
+            <div id="temp-input-wrapper" class="hidden">
+              <label for="filter-wassertemperatur">Wassertemperatur (°C)</label>
+              <input
+                type="number"
+                id="filter-wassertemperatur"
+                name="wassertemperatur"
+                min="0"
+                max="35"
+                step="1"
+                placeholder="0–35 °C"
+                aria-describedby="temp-error"
+              />
+              <span id="temp-error" class="field-error hidden" role="alert"></span>
+            </div>
+          </div>
+
+          <div class="filter-actions">
+            <button type="button" id="btn-reset" class="btn btn--secondary">Zurücksetzen</button>
+          </div>
+        </form>
+
+        <!-- Profilbereich -->
+        <section id="profile-panel" aria-label="Gespeicherte Profile">
+          <h2>Profile</h2>
+          <div class="profile-save">
+            <input
+              type="text"
+              id="profile-name-input"
+              placeholder="Profilname (max. 50 Zeichen)"
+              maxlength="50"
+              aria-label="Profilname"
+            />
+            <button type="button" id="btn-profile-save" class="btn btn--primary">Speichern</button>
+          </div>
+          <ul id="profile-list" aria-label="Profilliste"></ul>
+        </section>
+      </aside>
+
+      <!-- Empfehlungsbereich -->
+      <section id="recommendation-panel" aria-label="Köderempfehlungen">
+        <h2>Empfehlungen</h2>
+        <div id="recommendation-list" aria-live="polite" aria-label="Empfehlungsliste">
+          <p class="hint-text">Wähle einen oder mehrere Filter, um Köderempfehlungen zu erhalten.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Detailansicht-Modal -->
+  <div id="detail-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <button type="button" id="modal-close" class="btn btn--icon modal-close" aria-label="Detailansicht schließen">✕</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -32,6 +32,13 @@ const WARNING_DEFINITIONS = [
       profile.jahreszeit === 'Sommer' &&
       profile.wetter === 'sonnig',
   },
+  {
+    id: 'warn-gebirgsbach-stroemung',
+    text: 'Gebirgsbäche haben typischerweise starke bis mittlere Strömung. Bitte prüfe, ob der Filter „Strömung" auf „stark" oder „mittel" angepasst werden soll.',
+    condition: (profile) =>
+      profile.gewaesserart === 'Gebirgsbach' &&
+      (profile.stroemung === 'keine' || profile.stroemung === 'schwach'),
+  },
 ];
 
 /**

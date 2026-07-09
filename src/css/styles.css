@@ -403,6 +403,25 @@ a:focus {
   box-shadow: var(--shadow-sm);
 }
 
+/* Hinweis-Karten (Info, kein Gefahrenhinweis): blau/grün */
+.warning-card--hint {
+  background-color: #e8f4fd;
+  border-color: #1976d2;
+}
+
+.warning-card--hint .warning-card__text {
+  color: #0d3c6e;
+}
+
+.warning-card--hint .warning-card__close {
+  border-color: #1976d2;
+  color: #0d3c6e;
+}
+
+.warning-card--hint .warning-card__close:hover {
+  background-color: #bbdefb;
+}
+
 .warning-card__icon {
   font-size: 1.25rem;
   flex-shrink: 0;
@@ -684,4 +703,19 @@ a:focus {
   .btn {
     display: none;
   }
+}
+
+/* --- Footer --- */
+#app-footer {
+  background-color: #f0f4f0;
+  border-top: 1px solid var(--color-border);
+  padding: 1rem 1.5rem;
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+#app-footer strong {
+  color: var(--color-text);
 }

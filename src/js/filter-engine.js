@@ -215,6 +215,54 @@ function query(profile, dataset) {
     filteredFinal = filteredFinal.filter((entry) => entry.klasse === 'Grundmontage-Koeder');
   }
 
+  // Sonderregel Bergsee: Strömungsköder ausschliessen (Req. 8.4)
+  // Köder mit stroemung: ['mittel', 'stark'] OHNE ['keine', 'schwach'] gelten als "Strömung erforderlich"
+  if (profile.gewaesserart === 'Bergsee') {
+    filteredFinal = filteredFinal.filter((entry) => {
+      // Ausschluss: Köder, die ausschliesslich Strömung benötigen (keine 'keine'/'schwach' in ihrer Liste)
+      const requiresFlow = entry.stroemung && entry.stroemung.length > 0 &&
+        !entry.stroemung.includes('keine') && !entry.stroemung.includes('schwach');
+      return !requiresFlow;
+    });
+  }
+
+  // Sonderregel Bergsee + Sommer: nur Tiefen-Köder (>10 m) oder Flachwasser an Einläufen (≤2 m) (Req. 8.2)
+  // Implementierung: Oberflächenköder und reine Mittelwasser-Köder ausschliessen,
+  // sofern sie nicht explizit für 'Oberfläche' (Einläufe) AND Bergsee geeignet sind.
+  // Da der Datensatz keine separate "Einlauf"-Kennzeichnung hat, erlauben wir Oberfläche
+  // nur wenn der Köder auch 'keine'/'schwach' Strömung unterstützt (Einlauf-Charakteristik).
+  if (profile.gewaesserart === 'Bergsee' && profile.jahreszeit === 'Sommer') {
+    filteredFinal = filteredFinal.filter((entry) => {
+      // Erlaubt: Köder für Grund (Tiefe >10 m) oder Köder für Oberfläche an ruhigen Stellen
+      const forTiefe = entry.tiefe && entry.tiefe.includes('Grund');
+      const forEinlauf = entry.tiefe && entry.tiefe.includes('Oberfläche') &&
+        entry.stroemung && (entry.stroemung.includes('keine') || entry.stroemung.includes('schwach'));
+      return forTiefe || forEinlauf;
+    });
+  }
+
+  // Sonderregel Gebirgsbach: nur Salmoniden-Köder, keine Friedfisch-Köder (Req. 9.1)
+  if (profile.gewaesserart === 'Gebirgsbach') {
+    // Friedfische die NICHT für Gebirgsbach geeignet sind
+    const FRIEDFISCHE = ['Karpfen', 'Brachse', 'Schleie', 'Wels'];
+    filteredFinal = filteredFinal.filter((entry) => {
+      // Ausschluss: Köder, die ausschliesslich Friedfische als Zielarten haben
+      const onlyFriedfisch = entry.fischart && entry.fischart.length > 0 &&
+        entry.fischart.every((f) => FRIEDFISCHE.includes(f));
+      return !onlyFriedfisch;
+    });
+
+    // Erlaubte Köderklassen für Gebirgsbach (Req. 9.3):
+    // Spinner Grösse 0-2 (klein), Mini-Wobbler (klein), Nymphen, Trockenfliegen
+    // Ausschluss: grosse Köder (>8 cm, also groesse === 'groß') und Naturköder (Boilies, Pellets, Maden)
+    const VERBOTENE_TYPEN_GEBIRGSBACH = ['Boilie', 'Pellet', 'Maden', 'Brot', 'Mais', 'Tigernuss'];
+    filteredFinal = filteredFinal.filter((entry) => {
+      if (entry.groesse === 'groß') return false;
+      if (VERBOTENE_TYPEN_GEBIRGSBACH.includes(entry.typ)) return false;
+      return true;
+    });
+  }
+
   // Schritt 2: Score berechnen
   const scored = filteredFinal.map((entry) => {
     const score = scoreEntry(entry, profile);
@@ -232,52 +280,114 @@ function query(profile, dataset) {
     return a.entry.typBezeichnung.localeCompare(b.entry.typBezeichnung, 'de');
   });
 
-  // Schritt 5: Auf maximal 5 begrenzen
-  let top5 = nonZero.slice(0, 5);
+  // Schritt 5: Alle Einträge mit hohem Score ausgeben (kein hartes Limit mehr).
+  // "Hoher Score" = maxScore - 2, damit nur wirklich passende Köder erscheinen.
+  // Bei sehr wenigen Ergebnissen (≤3) werden alle zurückgegeben.
+  let topResults;
+  if (nonZero.length === 0) {
+    topResults = [];
+  } else {
+    const maxScore = nonZero[0].score; // bereits absteigend sortiert
+    const threshold = Math.max(maxScore - 2, nonZero[nonZero.length - 1].score);
+    topResults = nonZero.filter(({ score }) => score >= threshold);
+    // Mindestens 3, falls vorhanden
+    if (topResults.length < 3 && nonZero.length >= 3) {
+      topResults = nonZero.slice(0, 3);
+    }
+  }
 
-  // Temperatur-Sonderregeln (Post-Processing auf top5):
+  // Sonderregel Gebirgsbach + Frühling/Sommer → Nymphen/Trockenfliegen zuerst (Req. 9.2)
+  // Mindestens eine Nymphe oder Trockenfliege unter den ersten 3 Empfehlungen
+  const NYMPHEN_TYPEN = ['Nymphe', 'Trockenfliege'];
+  if (
+    profile.gewaesserart === 'Gebirgsbach' &&
+    (profile.jahreszeit === 'Frühling' || profile.jahreszeit === 'Sommer')
+  ) {
+    const hasNympheInTop3 = topResults.slice(0, 3).some(({ entry }) => NYMPHEN_TYPEN.includes(entry.typ));
+    if (!hasNympheInTop3) {
+      // Suche erste Nymphe/Trockenfliege ausserhalb der Top-3
+      const nympheIdx = topResults.findIndex(
+        ({ entry }, idx) => idx >= 3 && NYMPHEN_TYPEN.includes(entry.typ)
+      );
+      if (nympheIdx !== -1) {
+        // Verschiebe ans Ende der ersten 3
+        const nympheEntry = topResults[nympheIdx];
+        topResults = [
+          ...topResults.slice(0, 2),
+          nympheEntry,
+          ...topResults.slice(2, nympheIdx),
+          ...topResults.slice(nympheIdx + 1),
+        ];
+      }
+    }
+  }
+
+  // Sonderregel Gebirgsbach + Herbst/Winter → Spinner/Mini-Wobbler zuerst (Req. 9.5)
+  const SPINNER_WOBBLER_TYPEN = ['Spinner', 'Wobbler'];
+  if (
+    profile.gewaesserart === 'Gebirgsbach' &&
+    (profile.jahreszeit === 'Herbst' || profile.jahreszeit === 'Winter')
+  ) {
+    const hasSpinnerInTop3 = topResults.slice(0, 3).some(({ entry }) => SPINNER_WOBBLER_TYPEN.includes(entry.typ));
+    if (!hasSpinnerInTop3) {
+      const spinnerIdx = topResults.findIndex(
+        ({ entry }, idx) => idx >= 3 && SPINNER_WOBBLER_TYPEN.includes(entry.typ)
+      );
+      if (spinnerIdx !== -1) {
+        const spinnerEntry = topResults[spinnerIdx];
+        topResults = [
+          ...topResults.slice(0, 2),
+          spinnerEntry,
+          ...topResults.slice(2, spinnerIdx),
+          ...topResults.slice(spinnerIdx + 1),
+        ];
+      }
+    }
+  }
+
+  // Temperatur-Sonderregeln (Post-Processing auf topResults):
   if (temp !== null && temp !== undefined) {
     // Regel 2: [8, 18] → mindestens ein Oberflaechenkoeder + ein Tiefenkoeder (sofern vorhanden)
     if (temp >= 8 && temp <= 18) {
-      const hasOberflaeche = top5.some(({ entry }) => entry.klasse === 'Oberflaechenkoeder');
+      const hasOberflaeche = topResults.some(({ entry }) => entry.klasse === 'Oberflaechenkoeder');
 
-      // Pool aller gefilterten Einträge nach Score sortiert (außerhalb der aktuellen top5)
-      const top5Ids = new Set(top5.map(({ entry }) => entry.id));
-      const pool = nonZero.filter(({ entry }) => !top5Ids.has(entry.id));
+      // Pool aller gefilterten Einträge nach Score sortiert (außerhalb der aktuellen topResults)
+      const topResultsIds = new Set(topResults.map(({ entry }) => entry.id));
+      const pool = nonZero.filter(({ entry }) => !topResultsIds.has(entry.id));
 
       if (!hasOberflaeche) {
         // Suche einen Oberflaechenkoeder im Pool
         const candidate = pool.find(({ entry }) => entry.klasse === 'Oberflaechenkoeder');
         if (candidate) {
-          // Ersetze den letzten Nicht-Oberflächen-Eintrag in top5
-          const replaceIdx = [...top5].reverse().findIndex(({ entry }) => entry.klasse !== 'Oberflaechenkoeder');
+          // Ersetze den letzten Nicht-Oberflächen-Eintrag in topResults
+          const replaceIdx = [...topResults].reverse().findIndex(({ entry }) => entry.klasse !== 'Oberflaechenkoeder');
           if (replaceIdx !== -1) {
-            const actualIdx = top5.length - 1 - replaceIdx;
-            top5 = [...top5.slice(0, actualIdx), candidate, ...top5.slice(actualIdx + 1)];
+            const actualIdx = topResults.length - 1 - replaceIdx;
+            topResults = [...topResults.slice(0, actualIdx), candidate, ...topResults.slice(actualIdx + 1)];
           }
         }
       }
 
       // Recompute hasTiefen after the Oberflaechenkoeder replacement above,
       // because that step may have inadvertently removed the only Tiefenkoeder.
-      const hasTiefen = top5.some(({ entry }) => entry.klasse === 'Tiefenkoeder');
+      const hasTiefen = topResults.some(({ entry }) => entry.klasse === 'Tiefenkoeder');
 
       if (!hasTiefen) {
         // Suche einen Tiefenkoeder im Pool (neu berechnen nach möglicher Änderung oben)
-        const top5IdsUpdated = new Set(top5.map(({ entry }) => entry.id));
-        const poolUpdated = nonZero.filter(({ entry }) => !top5IdsUpdated.has(entry.id));
+        const topResultsIdsUpdated = new Set(topResults.map(({ entry }) => entry.id));
+        const poolUpdated = nonZero.filter(({ entry }) => !topResultsIdsUpdated.has(entry.id));
         const candidate = poolUpdated.find(({ entry }) => entry.klasse === 'Tiefenkoeder');
         if (candidate) {
-          const replaceIdx = [...top5].reverse().findIndex(({ entry }) => entry.klasse !== 'Tiefenkoeder' && entry.klasse !== 'Oberflaechenkoeder');
+          const replaceIdx = [...topResults].reverse().findIndex(({ entry }) => entry.klasse !== 'Tiefenkoeder' && entry.klasse !== 'Oberflaechenkoeder');
           if (replaceIdx !== -1) {
-            const actualIdx = top5.length - 1 - replaceIdx;
-            top5 = [...top5.slice(0, actualIdx), candidate, ...top5.slice(actualIdx + 1)];
+            const actualIdx = topResults.length - 1 - replaceIdx;
+            topResults = [...topResults.slice(0, actualIdx), candidate, ...topResults.slice(actualIdx + 1)];
           } else {
             // Als Fallback: letzten Eintrag ersetzen, sofern er kein Oberflaechenkoeder ist
-            const lastNonSurface = [...top5].reverse().findIndex(({ entry }) => entry.klasse !== 'Oberflaechenkoeder');
+            const lastNonSurface = [...topResults].reverse().findIndex(({ entry }) => entry.klasse !== 'Oberflaechenkoeder');
             if (lastNonSurface !== -1) {
-              const actualIdx = top5.length - 1 - lastNonSurface;
-              top5 = [...top5.slice(0, actualIdx), candidate, ...top5.slice(actualIdx + 1)];
+              const actualIdx = topResults.length - 1 - lastNonSurface;
+              topResults = [...topResults.slice(0, actualIdx), candidate, ...topResults.slice(actualIdx + 1)];
             }
           }
         }
@@ -286,17 +396,17 @@ function query(profile, dataset) {
 
     // Regel 3: (18, 35] → Anteil Oberflaechenkoeder >= 50 %
     else if (temp > 18 && temp <= 35) {
-      const surfaceCount = top5.filter(({ entry }) => entry.klasse === 'Oberflaechenkoeder').length;
-      const required = Math.ceil(top5.length / 2); // mindestens 50 %
+      const surfaceCount = topResults.filter(({ entry }) => entry.klasse === 'Oberflaechenkoeder').length;
+      const required = Math.ceil(topResults.length / 2); // mindestens 50 %
 
       if (surfaceCount < required) {
-        const top5IdsSet = new Set(top5.map(({ entry }) => entry.id));
-        // Pool der Oberflächenköder, die noch nicht in top5 sind
+        const topResultsIdsSet = new Set(topResults.map(({ entry }) => entry.id));
+        // Pool der Oberflächenköder, die noch nicht in topResults sind
         const surfacePool = nonZero.filter(
-          ({ entry }) => entry.klasse === 'Oberflaechenkoeder' && !top5IdsSet.has(entry.id)
+          ({ entry }) => entry.klasse === 'Oberflaechenkoeder' && !topResultsIdsSet.has(entry.id)
         );
 
-        let result = [...top5];
+        let result = [...topResults];
         let added = surfaceCount;
 
         for (const candidate of surfacePool) {
@@ -321,13 +431,13 @@ function query(profile, dataset) {
           result = [...result.slice(0, actualIdx), ...result.slice(actualIdx + 1)];
         }
 
-        top5 = result;
+        topResults = result;
       }
     }
   }
 
   // Schritt 6: Recommendation-Objekte bauen
-  return top5.map(({ entry, score }) => ({
+  return topResults.map(({ entry, score }) => ({
     bait: entry,
     score,
     kurzerklaerung: generateKurzerklaerung(entry, profile, score),

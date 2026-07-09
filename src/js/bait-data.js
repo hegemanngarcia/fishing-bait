@@ -21,7 +21,7 @@ export const TIME_OF_DAY_VALUES = [
 export const CURRENT_VALUES = ['keine', 'schwach', 'mittel', 'stark'];
 
 /** @type {string[]} Gültige Gewässerart-Werte */
-export const WATER_TYPE_VALUES = ['Fluss', 'See', 'Teich', 'Stausee', 'Meer', 'Brackwasser', 'Wehr'];
+export const WATER_TYPE_VALUES = ['Fluss', 'See', 'Teich', 'Stausee', 'Meer', 'Brackwasser', 'Wehr', 'Bergsee', 'Gebirgsbach'];
 
 /** @type {string[]} Gültige Tiefenwerte */
 export const DEPTH_VALUES = ['Oberfläche', 'Mittelwasser', 'Grund'];
@@ -52,7 +52,7 @@ export const FISH_TYPE_VALUES = [
  */
 
 /**
- * @typedef {'Fluss'|'See'|'Teich'|'Stausee'|'Meer'|'Brackwasser'|'Wehr'} WaterTypeValue
+ * @typedef {'Fluss'|'See'|'Teich'|'Stausee'|'Meer'|'Brackwasser'|'Wehr'|'Bergsee'|'Gebirgsbach'} WaterTypeValue
  */
 
 /**
@@ -2419,7 +2419,7 @@ export const BAIT_DATASET = [
   // =========================================================================
   {
     id: 'bait-068',
-    typBezeichnung: 'Kleiner silberner Spinner am Wehr',
+    typBezeichnung: 'Kleiner silberner Spinner für Strömungsschatten',
     typ: 'Spinner',
     groesse: 'klein',
     farbe: 'hell',
@@ -2452,7 +2452,7 @@ export const BAIT_DATASET = [
   },
   {
     id: 'bait-069',
-    typBezeichnung: 'Naturwurm auf Wehr-Grundmontage',
+    typBezeichnung: 'Naturwurm auf schwerer Strömungs-Grundmontage',
     typ: 'Wurm',
     groesse: 'mittel',
     farbe: 'naturfarben',
@@ -2485,7 +2485,7 @@ export const BAIT_DATASET = [
   },
   {
     id: 'bait-070',
-    typBezeichnung: 'Mittlerer Tauchwobbler für Wehr-Raubfische',
+    typBezeichnung: 'Mittlerer Tauchwobbler für Strömungskolk',
     typ: 'Wobbler',
     groesse: 'mittel',
     farbe: 'naturfarben',
@@ -2518,7 +2518,7 @@ export const BAIT_DATASET = [
   },
   {
     id: 'bait-071',
-    typBezeichnung: 'Maden-Büschel auf Feeder am Wehr',
+    typBezeichnung: 'Maden-Büschel auf schwerem Feeder im Strömungsschatten',
     typ: 'Maden',
     groesse: 'klein',
     farbe: 'hell',
@@ -2589,7 +2589,7 @@ export const BAIT_DATASET = [
   },
   {
     id: 'bait-073',
-    typBezeichnung: 'Brotflocke auf Grundmontage am Wehr',
+    typBezeichnung: 'Brotflocke auf Grundmontage im Strömungsschatten',
     typ: 'Brot',
     groesse: 'mittel',
     farbe: 'hell',
@@ -2622,7 +2622,7 @@ export const BAIT_DATASET = [
   },
   {
     id: 'bait-074',
-    typBezeichnung: 'Halibut-Pellet auf Feeder am Wehr',
+    typBezeichnung: 'Halibut-Pellet auf Feeder im Strömungsschatten',
     typ: 'Pellet',
     groesse: 'mittel',
     farbe: 'dunkel',
@@ -2655,7 +2655,7 @@ export const BAIT_DATASET = [
   },
   {
     id: 'bait-075',
-    typBezeichnung: 'Gummifisch im Kolk unterhalb des Wehrs',
+    typBezeichnung: 'Gummifisch im tiefen Strömungskolk',
     typ: 'Gummifisch',
     groesse: 'mittel',
     farbe: 'naturfarben',
@@ -2688,7 +2688,7 @@ export const BAIT_DATASET = [
   },
   {
     id: 'bait-076',
-    typBezeichnung: 'Großer Jerkbait für Wehr-Hecht',
+    typBezeichnung: 'Großer Jerkbait für Hecht im Strömungskolk',
     typ: 'Jerkbait',
     groesse: 'groß',
     farbe: 'zweifarbig',
@@ -2721,7 +2721,7 @@ export const BAIT_DATASET = [
   },
   {
     id: 'bait-077',
-    typBezeichnung: 'Aal-Grundmontage am Wehrpool',
+    typBezeichnung: 'Aal-Grundmontage im Strömungspool',
     typ: 'Wurm',
     groesse: 'groß',
     farbe: 'dunkel',
@@ -2754,7 +2754,7 @@ export const BAIT_DATASET = [
   },
   {
     id: 'bait-078',
-    typBezeichnung: 'Stinkköder (Leberstück) am Wehr für Wels',
+    typBezeichnung: 'Stinkköder (Leberstück) im Strömungsschatten für Wels',
     typ: 'Leber',
     groesse: 'mittel',
     farbe: 'dunkel',
@@ -2787,7 +2787,7 @@ export const BAIT_DATASET = [
   },
   {
     id: 'bait-079',
-    typBezeichnung: 'Kleiner Gummiwurm Drop-Shot am Wehr für Barsch',
+    typBezeichnung: 'Kleiner Gummiwurm Drop-Shot im Strömungsschatten für Barsch',
     typ: 'Gummiwurm',
     groesse: 'klein',
     farbe: 'auffällig',
@@ -2820,7 +2820,7 @@ export const BAIT_DATASET = [
   },
   {
     id: 'bait-080',
-    typBezeichnung: 'Lebendköder-Pose (schwebender Köderfisch) am Wehr',
+    typBezeichnung: 'Lebendköder-Pose (schwebender Köderfisch) an Strömungsgrenze',
     typ: 'Köderfisch',
     groesse: 'klein',
     farbe: 'naturfarben',
@@ -2853,7 +2853,7 @@ export const BAIT_DATASET = [
   },
   {
     id: 'bait-081',
-    typBezeichnung: 'Trocken- und Nassfliege am Wehr für Forelle',
+    typBezeichnung: 'Trocken- und Nassfliege an Strömungsnaht für Forelle',
     typ: 'Nymphe',
     groesse: 'klein',
     farbe: 'naturfarben',
@@ -2882,6 +2882,358 @@ export const BAIT_DATASET = [
     fischart: ['Forelle', 'Barsch'],
     tempMin: 8,
     tempMax: 22,
+    basisScore: 7
+  },
+
+  // =========================================================================
+  // Bergsee – spezifische Einträge (bait-082 – bait-089)
+  // Wissenschaftliche Grundlage: FishBase (Salvelinus umbla Tiefenhabitat),
+  // Nature.com (Salmo trutta Temperaturverhalten), Springer (alpine lake food webs)
+  // =========================================================================
+  {
+    id: 'bait-082',
+    typBezeichnung: 'Kleiner silberner Tiefenlöffel für Bergsee',
+    typ: 'Löffel',
+    groesse: 'klein',
+    farbe: 'hell',
+    gewicht: 'schwer',
+    aktion: 'taumelnd',
+    klasse: 'Tiefenkoeder',
+    montage: 'Schwere Grundmontage für Bergsee-Tiefen',
+    montageSchritte: [
+      'Hauptschnur (0,20 mm Mono oder PE 0,8) auf Rolle spulen.',
+      'Dreiwegewirbel ans Schnurende knoten.',
+      'Am unteren Öse: 30–50 cm Stahl- oder Fluorocarbon-Vorfach (0,22 mm) mit Löffel einhängen.',
+      'Am seitlichen Öse: 20–30 cm Bleiabzug mit schwerem Blei (15–25 g) befestigen.',
+      'Montage langsam auf Zieltiefe (10–30 m) ablassen und gelegentlich anheben.'
+    ],
+    beschreibung: 'Kleiner, stark glänzender Metalllöffel für die Tiefenzonen (10–30 m) von Bergseen. Seesaiblinge und Tiefenforellen halten sich im Sommer unter der Thermokline auf und reagieren gut auf langsam taumelnde Blinker, die Kleinfische imitieren.',
+    angeltipp: 'Löffel langsam und gleichmässig durch die Tiefenzone führen. Bei Seesaiblingen empfiehlt sich eine Präsentation direkt über dem Grund in 15–25 m Tiefe.',
+    fachbegriffe: [
+      { term: 'Thermokline', definition: 'Temperatursprungschicht im stehenden Gewässer, unterhalb derer die Wassertemperatur abrupt abfällt. Seesaiblinge halten sich im Sommer bevorzugt in diesen kalten Tiefenzonen auf.' },
+      { term: 'Löffel', definition: 'Metallköder mit konkaver Form, der beim Einzug eine taumelnde Bewegung ausführt und Kleinfische imitiert.' }
+    ],
+    wetter: ['sonnig', 'leicht bewölkt', 'bedeckt'],
+    tageszeit: ['Morgen', 'Mittag', 'Nachmittag', 'Abend'],
+    stroemung: ['keine', 'schwach'],
+    gewaesserart: ['Bergsee'],
+    tiefe: ['Grund', 'Mittelwasser'],
+    jahreszeit: ['Sommer', 'Herbst'],
+    fischart: ['Forelle'],
+    tempMin: 4,
+    tempMax: 14,
+    basisScore: 8
+  },
+  {
+    id: 'bait-083',
+    typBezeichnung: 'Kleiner olivgrüner Spinner für Bergsee-Einläufe',
+    typ: 'Spinner',
+    groesse: 'klein',
+    farbe: 'naturfarben',
+    gewicht: 'leicht',
+    aktion: 'schnell',
+    klasse: 'Tiefenkoeder',
+    montage: 'Direkte Schnurmontage ohne Vorfach',
+    montageSchritte: [
+      'Spinner mit Palstek-Knoten an Fluorocarbon-Hauptschnur (0,18 mm) binden.',
+      'An Einläufen oder Flachwasserzonen (≤2 m) quer zum Ufer einwerfen.',
+      'Gleichmässig mit mittlerem Tempo einrollen – Blattschaufel muss rotieren.',
+      'Verschiedene Tiefen durch Zählen beim Absinken variieren.'
+    ],
+    beschreibung: 'Kleiner Spinner in gedeckten Naturtönen für Bachforellen an Bergsee-Einläufen und Flachwasserzonen. Das sehr klare Wasser der Bergseen erfordert natürliche Farben und kleine Ködergrößen – auffällige Farben schrecken scheue Forellen ab.',
+    angeltipp: 'An Einläufen und Zuflüssen wirft die Forelle im Sommer bevorzugt auf kleine, naturgetreue Köder. Leise Bewegungen am Ufer sind entscheidend.',
+    fachbegriffe: [
+      { term: 'Oligotroph', definition: 'Nährstoffarm; Bergseen sind typischerweise oligotroph, was klares Wasser, wenig Plankton und scheue Fische bedeutet.' },
+      { term: 'Einlauf', definition: 'Zufluss eines Bachs oder Baches in einen See; sauerstoffreiches, nahrungsreiches Wasser zieht Forellen an.' }
+    ],
+    wetter: ['sonnig', 'leicht bewölkt', 'bedeckt'],
+    tageszeit: ['Morgengrauen', 'Morgen', 'Abend'],
+    stroemung: ['keine', 'schwach'],
+    gewaesserart: ['Bergsee'],
+    tiefe: ['Oberfläche', 'Mittelwasser'],
+    jahreszeit: ['Frühling', 'Sommer', 'Herbst'],
+    fischart: ['Forelle'],
+    tempMin: 4,
+    tempMax: 16,
+    basisScore: 8
+  },
+  {
+    id: 'bait-084',
+    typBezeichnung: 'Naturfarbene Nymphe für Bergsee',
+    typ: 'Nymphe',
+    groesse: 'klein',
+    farbe: 'naturfarben',
+    gewicht: 'leicht',
+    aktion: 'sinkend-langsam',
+    klasse: 'Tiefenkoeder',
+    montage: 'Fliegenfischen-Montage mit sinkender Schnur',
+    montageSchritte: [
+      'Fliegenschnur (sinkend, Klasse 3–5) auf Fliegenrute aufsetzen.',
+      'Fluorocarbon-Vorfach (1,5–2 m, 0,14 mm) mit Doppelknotentechnik befestigen.',
+      'Nymphe (Hakengrösse 14–18) am Vorfach binden.',
+      'Kurze, präzise Würfe an Einläufe und sichtbare Forellen.',
+      'Nymphe langsam sinken lassen und Leinenbewegungen beobachten.'
+    ],
+    beschreibung: 'Naturgetreues Nymphenimitat für das Fliegenfischen in Bergseen. Forellen jagen in klaren, nährstoffarmen Bergseen bevorzugt an Einläufen und überfluteten Bereichen nach Wasserinsekten – eine Nymphe in natürlichen Farben ist hier besonders effektiv.',
+    angeltipp: 'In Bergseen geben Forellen den Biss kaum preis – auf minimale Leinenbewegungen achten. Eine sinkende Fliegenschnur hilft, die Nymphe in die gewünschte Tiefe zu bringen.',
+    fachbegriffe: [
+      { term: 'Nymphe', definition: 'Fliegenmuster, das das Unterwasserstadium eines Wasserinsekts imitiert; sinkend präsentiert, direkt im oder unter dem Wasserspiegel.' },
+      { term: 'Fluorocarbon', definition: 'Nahezu unsichtbares Schnurmaterial mit ähnlichem Brechungsindex wie Wasser, besonders wertvoll im klaren Wasser von Bergseen.' }
+    ],
+    wetter: ['sonnig', 'leicht bewölkt', 'bedeckt'],
+    tageszeit: ['Morgengrauen', 'Morgen', 'Nachmittag', 'Abend'],
+    stroemung: ['keine', 'schwach'],
+    gewaesserart: ['Bergsee'],
+    tiefe: ['Oberfläche', 'Mittelwasser'],
+    jahreszeit: ['Frühling', 'Sommer', 'Herbst'],
+    fischart: ['Forelle'],
+    tempMin: 4,
+    tempMax: 18,
+    basisScore: 7
+  },
+  {
+    id: 'bait-085',
+    typBezeichnung: 'Schwerer Pilker für Bergsee-Tiefensaiblinge',
+    typ: 'Pilker',
+    groesse: 'mittel',
+    farbe: 'hell',
+    gewicht: 'schwer',
+    aktion: 'sinkend-langsam',
+    klasse: 'Tiefenkoeder',
+    montage: 'Pilker-Grundmontage für Tiefenzonen',
+    montageSchritte: [
+      'Hauptschnur (PE 0,6–0,8) durch Rutenringe führen.',
+      'Pilker (15–25 g) direkt an die Hauptschnur klippen oder knoten.',
+      'Auf Zieltiefe (15–25 m) absinken lassen.',
+      'Pilker rhythmisch 30–50 cm anheben und wieder sinken lassen.',
+      'Biss erfolgt oft beim Absinken.'
+    ],
+    beschreibung: 'Schlanker, schwerer Metalljig für die Tiefenzonen von Bergseen. Seesaiblinge (*Salvelinus umbla*) bevorzugen im Sommer die kalten Zonen unter der Thermokline in 15–30 m Tiefe und reagieren gut auf vertikal geführte, glänzende Köder.',
+    angeltipp: 'Seesaiblinge stehen oft in Schwärmen. Wenn ein Biss erzielt wird, sofort wieder auf dieselbe Tiefe absenken für schnelle Folgefänge. Boot oder Belly-Boot empfohlen.',
+    fachbegriffe: [
+      { term: 'Pilker', definition: 'Schlanker, schwerer Metallköder für das Tiefenfischen; vertikal geführt, ahmt taumelnde Kleinfische nach.' },
+      { term: 'Seesaibling', definition: 'Salmonide (*Salvelinus umbla*) der tiefen Alpenseen; hält sich im Sommer bevorzugt unter der Thermokline in 10–30 m Tiefe auf.' }
+    ],
+    wetter: ['sonnig', 'leicht bewölkt', 'bedeckt', 'Regen'],
+    tageszeit: ['Morgen', 'Mittag', 'Nachmittag', 'Abend'],
+    stroemung: ['keine', 'schwach'],
+    gewaesserart: ['Bergsee'],
+    tiefe: ['Grund'],
+    jahreszeit: ['Sommer'],
+    fischart: ['Forelle'],
+    tempMin: 4,
+    tempMax: 12,
+    basisScore: 9
+  },
+  {
+    id: 'bait-086',
+    typBezeichnung: 'Kleiner Naturwurm auf leichter Bergsee-Grundmontage',
+    typ: 'Wurm',
+    groesse: 'klein',
+    farbe: 'naturfarben',
+    gewicht: 'mittel',
+    aktion: 'langsam',
+    klasse: 'Grundmontage-Koeder',
+    montage: 'Leichte Grundmontage für Bergsee',
+    montageSchritte: [
+      'Fluorocarbon-Hauptschnur (0,18–0,20 mm) wählen.',
+      'Laufendes Blei (10–15 g) auf die Schnur fädeln, Blei-Stopper setzen.',
+      '60–80 cm Fluorocarbon-Vorfach (0,14–0,16 mm) mit kleinem Haken (Gr. 8–10) anhängen.',
+      'Frischen Naturwurm vollständig aufziehen.',
+      'Montage langsam auf Grund ablassen; gelegentlich leicht anheben.'
+    ],
+    beschreibung: 'Kleiner Naturwurm auf einer leichten Grundmontage für das Angeln in Bergseen. Forellen suchen im Frühjahr und Herbst aktiv nach Würmern und Bodenlebewesen an flachwasser Bereichen. Das sehr klare Wasser erfordert feine Vorfächer und kleine Haken.',
+    angeltipp: 'Im Bergsee sind sehr feine Schnüre entscheidend – das klare Wasser macht dicke Vorfächer sofort sichtbar. Leise Bewegungen am Ufer verhindern, dass scheue Forellen aufgeschreckt werden.',
+    fachbegriffe: [
+      { term: 'Laufendes Blei', definition: 'Bleigewicht, das frei auf der Hauptschnur gleitet, damit der Fisch beim Aufnehmen des Köders keinen Widerstand spürt.' }
+    ],
+    wetter: ['bedeckt', 'Regen', 'leicht bewölkt'],
+    tageszeit: ['Morgengrauen', 'Morgen', 'Abend'],
+    stroemung: ['keine', 'schwach'],
+    gewaesserart: ['Bergsee'],
+    tiefe: ['Grund', 'Mittelwasser'],
+    jahreszeit: ['Frühling', 'Herbst', 'Winter'],
+    fischart: ['Forelle'],
+    tempMin: 4,
+    tempMax: 14,
+    basisScore: 7
+  },
+
+  // =========================================================================
+  // Gebirgsbach – spezifische Einträge (bait-087 – bait-094)
+  // Wissenschaftliche Grundlage: MDPI (Salmo trutta Diätstudie in Kalkbach),
+  // Orvis hatch-matching (Ephemeroptera/Trichoptera Schlüpfphasen),
+  // troutnut.com (Insektenzyklen Alpenbach)
+  // =========================================================================
+  {
+    id: 'bait-087',
+    typBezeichnung: 'Braune Eintagsfliegen-Nymphe für Gebirgsbach',
+    typ: 'Nymphe',
+    groesse: 'klein',
+    farbe: 'naturfarben',
+    gewicht: 'leicht',
+    aktion: 'sinkend-langsam',
+    klasse: 'Tiefenkoeder',
+    montage: 'Tschechische Nymphen-Montage (Tschech-Nymphing)',
+    montageSchritte: [
+      'Kurze Fliegenrute (3–4 m) mit leichter Fliegenschnur ausrüsten.',
+      'Langes Mono-Vorfach (4–5 m, 0,14–0,16 mm) anhängen.',
+      'Indikator (Biobead oder Sichtindikator) am Vorfach setzen.',
+      'Nymphe (Hakengrösse 12–16) binden.',
+      'Nymphe direkt in die Strömungsnaht oder hinter Steine werfen und mit der Strömung driften lassen.',
+      'Beim leisesten Zucken des Indikators sofort anhaken.'
+    ],
+    beschreibung: 'Naturgetreues Imitat einer Eintagsfliegen-Nymphe (Ephemeroptera) für Gebirgsbäche. Im Frühling und Sommer dominieren Eintagsfliegen und Köcherfliegen die Bachforellen-Ernährung – Nymphen werden aktiv und häufig genommen. Die tschechische Nymphen-Technik ist besonders effektiv in schnellen Gebirgsbächen.',
+    angeltipp: 'Nymphe dicht an Steinen und in Kolken (strömungsberuhigten Zonen hinter Steinen) führen. Bachforellen stehen stromaufwärts und nehmen vorbeitreibende Nymphen.',
+    fachbegriffe: [
+      { term: 'Ephemeroptera', definition: 'Eintagsfliegen; Wasserinsekten, deren Nymphenstadium im Bach lebt und als Hauptnahrungsquelle für Bachforellen gilt.' },
+      { term: 'Tschech-Nymphing', definition: 'Technik des Nymphenfischens mit langer Rute und kurzem Vorfach in schneller Strömung, entwickelt für turbulente Gebirgsbäche.' }
+    ],
+    wetter: ['sonnig', 'leicht bewölkt', 'bedeckt'],
+    tageszeit: ['Morgengrauen', 'Morgen', 'Mittag', 'Abend'],
+    stroemung: ['mittel', 'stark'],
+    gewaesserart: ['Gebirgsbach'],
+    tiefe: ['Mittelwasser', 'Grund'],
+    jahreszeit: ['Frühling', 'Sommer'],
+    fischart: ['Forelle'],
+    tempMin: 6,
+    tempMax: 16,
+    basisScore: 9
+  },
+  {
+    id: 'bait-088',
+    typBezeichnung: 'Köcherfliegenimitat (Sedge) für Gebirgsbach',
+    typ: 'Trockenfliege',
+    groesse: 'klein',
+    farbe: 'naturfarben',
+    gewicht: 'leicht',
+    aktion: 'langsam',
+    klasse: 'Oberflaechenkoeder',
+    montage: 'Trockenfliegen-Montage mit flotierendem Vorfach',
+    montageSchritte: [
+      'Fliegenrute mit schwimmender Fliegenschnur (DT oder WF, Klasse 3–4) ausrüsten.',
+      'Abgestuftes Vorfach (2,5–3 m, auf 0,12–0,14 mm abgestuft) anhängen.',
+      'Sedge-Imitat (Hakengrösse 14–18) mit Trockenknotentechnik binden.',
+      'Floatant (Fett) auf die Fliege auftragen.',
+      'Upstream-Wurf: Fliege über den Haltestand werfen und natürlich driften lassen.',
+      'Beim Steigen der Forelle sofort, aber weich anhaken.'
+    ],
+    beschreibung: 'Naturgetreues Köcherfliegenimitat (Trichoptera) als Trockenfliege für Gebirgsbäche. In den Abendstunden und bei Insektenhatches nehmen Bachforellen bevorzugt Trockenfliegen an der Oberfläche. Sedge-Muster sind besonders effektiv im Sommer während der Köcherfliegen-Schlüpfphase.',
+    angeltipp: 'Abends und bei sichtbaren Steigern die Fliege so anbieten, dass sie exakt auf der natürlichen Driftlinie landet. Künstliche Führung erzeugt Schleppen und wird von erfahrenen Forellen abgelehnt.',
+    fachbegriffe: [
+      { term: 'Trichoptera', definition: 'Köcherfliegen; Wasserinsekten, deren Schlüpfphase im Gebirgsbach für Bachforellen zu den wichtigsten Nahrungsquellen zählt.' },
+      { term: 'Schleppen', definition: 'Unnatürliches Querziehen der Trockenfliege über die Strömungslinien, das von Forellen erkannt und abgelehnt wird.' }
+    ],
+    wetter: ['sonnig', 'leicht bewölkt', 'bedeckt'],
+    tageszeit: ['Abend', 'Nachmittag'],
+    stroemung: ['mittel', 'stark'],
+    gewaesserart: ['Gebirgsbach'],
+    tiefe: ['Oberfläche'],
+    jahreszeit: ['Frühling', 'Sommer'],
+    fischart: ['Forelle'],
+    tempMin: 8,
+    tempMax: 18,
+    basisScore: 8
+  },
+  {
+    id: 'bait-089',
+    typBezeichnung: 'Kleiner silberner Spinner Grösse 1 für Gebirgsbach',
+    typ: 'Spinner',
+    groesse: 'klein',
+    farbe: 'hell',
+    gewicht: 'leicht',
+    aktion: 'schnell',
+    klasse: 'Tiefenkoeder',
+    montage: 'Direkte Schnurmontage für Fliessgewässer',
+    montageSchritte: [
+      'Fluorocarbon-Schnur (0,16–0,18 mm) wählen.',
+      'Spinner mit kleinem Karabinerwirbel einhängen.',
+      'Querwurf oder leichter Upstreamwurf in die Strömung.',
+      'Spinner quer zur Strömung einrollen – Rotation kontrollieren.',
+      'Hinter Steinen und in strömungsberuhigten Zonen besonders effektiv.'
+    ],
+    beschreibung: 'Kleiner Spinner (Grösse 1) für die schnellen Fliessgewässer des Gebirgsbaches. Bachforellen reagieren im Herbst und Winter besonders gut auf glänzende kleine Spinner, wenn Insektenhatches selten werden und Kleinfischimitate bevorzugt werden.',
+    angeltipp: 'Spinner im Querwurf in die Strömung werfen und gleichmässig einholen. Die Blattschaufel muss von Anfang an rotieren – bei zu langsamer Führung sackt der Spinner zu tief.',
+    fachbegriffe: [
+      { term: 'Querwurf', definition: 'Wurf quer zur Strömung, sodass der Köder direkt durch den Fischbestand treibt. Besonders effektiv im Gebirgsbach.' }
+    ],
+    wetter: ['sonnig', 'leicht bewölkt', 'bedeckt', 'Regen'],
+    tageszeit: ['Morgen', 'Mittag', 'Nachmittag', 'Abend'],
+    stroemung: ['mittel', 'stark'],
+    gewaesserart: ['Gebirgsbach'],
+    tiefe: ['Mittelwasser', 'Oberfläche'],
+    jahreszeit: ['Herbst', 'Winter', 'Frühling'],
+    fischart: ['Forelle'],
+    tempMin: 4,
+    tempMax: 14,
+    basisScore: 8
+  },
+  {
+    id: 'bait-090',
+    typBezeichnung: 'Mini-Wobbler natürlichbraun für Gebirgsbach',
+    typ: 'Wobbler',
+    groesse: 'klein',
+    farbe: 'naturfarben',
+    gewicht: 'leicht',
+    aktion: 'taumelnd',
+    klasse: 'Tiefenkoeder',
+    montage: 'Direkte Schnurmontage leicht',
+    montageSchritte: [
+      'Fluorocarbon (0,16 mm) als Hauptschnur oder Vorfach wählen.',
+      'Mini-Wobbler (3–5 cm) mit kleinem Karabiner einhängen.',
+      'Upstream oder Querwurf in die Strömung werfen.',
+      'Einrollgeschwindigkeit so wählen, dass der Wobbler leicht taumelt.',
+      'Hinter grossen Steinen und in Tiefkolken einsetzen.'
+    ],
+    beschreibung: 'Kleiner Tauch-Wobbler (≤5 cm) in natürlichen Farbtönen für Gebirgsbäche. Im Herbst und Winter, wenn Insektenhatches ausbleiben, reagieren Bachforellen verstärkt auf kleine Kleinfischimitate. Naturgetreue Farben und kleine Grössen sind im klaren Gebirgswasser entscheidend.',
+    angeltipp: 'Wobbler direkt hinter Steinen einsetzen, wo sich Forellen in strömungsberuhigten Zonen aufhalten. Zu schnelles Einrollen verhindert das natürliche Taumeln.',
+    fachbegriffe: [
+      { term: 'Kolk', definition: 'Strömungsberuhigte Tiefzone hinter einem Stein oder Hindernis, bevorzugter Aufenthaltsort für Bachforellen.' },
+      { term: 'Mini-Wobbler', definition: 'Kleiner Kunstköder (≤5 cm) mit eingebautem Tauchteller, der beim Einzug eine taumelnde Bewegung ausführt.' }
+    ],
+    wetter: ['bedeckt', 'Regen', 'leicht bewölkt'],
+    tageszeit: ['Morgen', 'Mittag', 'Nachmittag', 'Abend'],
+    stroemung: ['mittel', 'stark'],
+    gewaesserart: ['Gebirgsbach'],
+    tiefe: ['Mittelwasser'],
+    jahreszeit: ['Herbst', 'Winter'],
+    fischart: ['Forelle'],
+    tempMin: 4,
+    tempMax: 12,
+    basisScore: 7
+  },
+  {
+    id: 'bait-091',
+    typBezeichnung: 'Äschen-Nymphe dunkel für Gebirgsbach',
+    typ: 'Nymphe',
+    groesse: 'klein',
+    farbe: 'dunkel',
+    gewicht: 'leicht',
+    aktion: 'sinkend-langsam',
+    klasse: 'Tiefenkoeder',
+    montage: 'Fliegenfischen-Montage für Äschen',
+    montageSchritte: [
+      'Fliegenrute (4–5 m) mit leichter schwimmender Fliegenschnur.',
+      'Dünnes Fluorocarbon-Vorfach (3 m, 0,12 mm) anhängen.',
+      'Dunkle Nymphe (Hakengrösse 14–16) binden.',
+      'Kurze, präzise Würfe in die Hauptströmung.',
+      'Nymphe frei driften lassen und Biss am Indikator abwarten.'
+    ],
+    beschreibung: 'Dunkle Nymphe für das Fliegenfischen auf Äschen in Gebirgsbächen. Äschen (*Thymallus thymallus*) sind typische Bewohner sauerstoffreicher Alpenbäche und reagieren besonders gut auf kleine dunkle Nymphen in der Hauptströmung. Als Indikatorart für sauberes Wasser sind sie ein Zeichen für intakte Bachökologie.',
+    angeltipp: 'Äschen stehen in der Hauptströmung mit dem Kopf stromauf. Nymphe knapp vor dem Fisch in der Strömung platzieren und natürlich driften lassen.',
+    fachbegriffe: [
+      { term: 'Äsche', definition: 'Salmonide (*Thymallus thymallus*), typischer Bewohner sauerstoffreicher Gebirgsbäche. Indikatorart für unverschmutztes Wasser.' },
+      { term: 'Hauptströmung', definition: 'Der schnellste Fliessbereich im Bachbett, bevorzugter Aufenthaltsort von Äschen und Bachforellen.' }
+    ],
+    wetter: ['sonnig', 'leicht bewölkt'],
+    tageszeit: ['Morgen', 'Mittag', 'Nachmittag', 'Abend'],
+    stroemung: ['mittel', 'stark'],
+    gewaesserart: ['Gebirgsbach'],
+    tiefe: ['Mittelwasser'],
+    jahreszeit: ['Frühling', 'Sommer', 'Herbst'],
+    fischart: ['Forelle'],
+    tempMin: 6,
+    tempMax: 16,
     basisScore: 7
   }
 ];

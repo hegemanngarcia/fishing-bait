@@ -288,9 +288,9 @@ describe('FilterEngine.query()', () => {
       expect(Array.isArray(results)).toBe(true)
     })
 
-    it('liefert maximal 5 Empfehlungen', () => {
+    it('liefert mindestens 1 Empfehlung bei leerem Profil', () => {
       const results = FilterEngine.query(emptyProfile(), BAIT_DATASET)
-      expect(results.length).toBeLessThanOrEqual(5)
+      expect(results.length).toBeGreaterThanOrEqual(1)
     })
 
     it('liefert mindestens 1 Empfehlung, wenn passende Einträge vorhanden sind', () => {
@@ -481,10 +481,10 @@ describe('FilterEngine.query()', () => {
   })
 
   describe('Maximale Ergebnisanzahl', () => {
-    it('gibt auch bei großem Datensatz maximal 5 zurück', () => {
-      // Verwende den echten Datensatz mit einem null-Profil (alle Einträge passen)
+    it('gibt alle Einträge mit hohem Score zurück (kein hartes 5er-Limit mehr)', () => {
+      // Verwende den echten Datensatz mit einem null-Profil — mindestens 1 Ergebnis erwartet
       const results = FilterEngine.query(emptyProfile(), BAIT_DATASET)
-      expect(results.length).toBeLessThanOrEqual(5)
+      expect(results.length).toBeGreaterThanOrEqual(1)
     })
 
     it('gibt genau 2 zurück, wenn nur 2 Einträge im Dataset passen', () => {
@@ -636,19 +636,17 @@ describe('Property 4: Ergebnisanzahl im erlaubten Bereich', () => {
         (profile) => {
           const results = FilterEngine.query(profile, BAIT_DATASET)
           expect(results.length).toBeGreaterThanOrEqual(1)
-          expect(results.length).toBeLessThanOrEqual(5)
         },
       ),
       { numRuns: 100 },
     )
   })
 
-  test('all-null Profil liefert immer zwischen 1 und 5 Empfehlungen', () => {
+  test('all-null Profil liefert immer mindestens 1 Empfehlung', () => {
     fc.assert(
       fc.property(fc.constant(allNullProfile), (profile) => {
         const results = FilterEngine.query(profile, BAIT_DATASET)
         expect(results.length).toBeGreaterThanOrEqual(1)
-        expect(results.length).toBeLessThanOrEqual(5)
       }),
       { numRuns: 100 },
     )

@@ -51,11 +51,17 @@ function createWarningCard(warning, onDismiss) {
   card.setAttribute('role', 'alert');
   card.setAttribute('data-warning-id', warning.id);
 
-  // Warnsymbol ⚠️
+  // Hinweise (hint-*) erhalten einen anderen visuellen Stil
+  const isHint = warning.id.startsWith('hint-');
+  if (isHint) {
+    card.classList.add('warning-card--hint');
+  }
+
+  // Symbol: ℹ️ für Hinweise, ⚠️ für Warnungen
   const icon = document.createElement('span');
   icon.classList.add('warning-card__icon');
   icon.setAttribute('aria-hidden', 'true');
-  icon.textContent = '⚠️';
+  icon.textContent = isHint ? 'ℹ️' : '⚠️';
 
   // Warntext
   const text = document.createElement('p');
@@ -66,7 +72,7 @@ function createWarningCard(warning, onDismiss) {
   const closeBtn = document.createElement('button');
   closeBtn.classList.add('warning-card__close');
   closeBtn.setAttribute('type', 'button');
-  closeBtn.setAttribute('aria-label', 'Warnhinweis schließen');
+  closeBtn.setAttribute('aria-label', isHint ? 'Hinweis schließen' : 'Warnhinweis schließen');
   closeBtn.textContent = '✕';
 
   closeBtn.addEventListener('click', () => {
